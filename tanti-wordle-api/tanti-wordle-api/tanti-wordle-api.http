@@ -1,0 +1,11 @@
+@tanti_wordle_api_HostAddress = http://localhost:5239
+
+GET {{tanti_wordle_api_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{tanti_wordle_api_HostAddress}}/todos/1
+Accept: application/json
+
+###
