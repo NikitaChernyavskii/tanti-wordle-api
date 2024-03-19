@@ -1,28 +1,35 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
+using Wordle.Exceptions;
 
 namespace Wordle.Api.Infrastructure.ExceptionHandlers;
 
-// Default exception handler. Create dedicated handler for specific exceptions
 [ExcludeFromCodeCoverage]
-public class DefaultExceptionHandler : IExceptionHandler
+public class ValidationFailedExceptionHandler : IExceptionHandler
 {
-    private readonly ILogger<DefaultExceptionHandler> _logger;
+    private readonly ILogger<ValidationFailedExceptionHandler> _logger;
 
-    public DefaultExceptionHandler(ILogger<DefaultExceptionHandler> logger)
+    public ValidationFailedExceptionHandler(ILogger<ValidationFailedExceptionHandler> logger)
     {
         _logger = logger;
     }
 
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        _logger.LogError(exception, $"Exception details: {exception.Message}");
+        if (exception is not ValidationFailedException
+            && exception is not ValidationException)
+        {
+            return false;
+        }
+
+        _logger.LogError(exception, $"Exception(Validation) details: {exception.Message}");
 
         var problemDetails = new ProblemDetails
         {
             Status = StatusCodes.Status400BadRequest,
-            Title = "An error occurred.",
+            Title = "A validation error occurred.",
             Detail = exception.Message
         };
 

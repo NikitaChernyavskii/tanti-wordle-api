@@ -37,6 +37,8 @@ void AddHealthChecksServices()
 
 void AddExceptinHandlingServices()
 {
+    // register excepttion handlers in right order! DefaultExceptionHandler should be last
+    builder.Services.AddExceptionHandler<ValidationFailedExceptionHandler>();
     builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
     builder.Services.AddProblemDetails();
     builder.Services.AddWordleServices();

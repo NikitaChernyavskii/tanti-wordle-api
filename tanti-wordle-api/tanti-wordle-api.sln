@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Services.Contracts",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Infrastructure", "Wordle.Infrastructure\Wordle.Infrastructure.csproj", "{12B95082-AF0E-411D-81AE-7BD3A611ABA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Exceptions", "Wordle.Exceptions\Wordle.Exceptions.csproj", "{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{12B95082-AF0E-411D-81AE-7BD3A611ABA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B95082-AF0E-411D-81AE-7BD3A611ABA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B95082-AF0E-411D-81AE-7BD3A611ABA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
