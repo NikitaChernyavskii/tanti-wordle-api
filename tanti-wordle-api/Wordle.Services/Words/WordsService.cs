@@ -29,14 +29,13 @@ public class WordsService : IWordsService
         var fullFilePath = Constants.FilesDirectoryPath + "\\" + fileName;
         if (!File.Exists(fullFilePath))
         {
-            // TODO: Add global exception handling
-            throw new ArgumentException($"File with {wordLenght} does not exist.");
+            throw new ArgumentException($"File with {wordLenght} lenght does not exist.");
         }
 
         var words = await File.ReadAllLinesAsync(fullFilePath);
         if (words == null || !words.Any())
         {
-            throw new ArgumentException($"File with {wordLenght} does not have words.");
+            throw new ArgumentException($"File with {wordLenght} lenght does not have words.");
         }
 
         return words.ToList();

@@ -9,7 +9,7 @@ public class WordsServiceValidator : IWordsServiceValidator
         if (wordLenght <= 0)
         {
             // TODO: update message with fluent validator format
-            throw new ValidationFailedException($"{wordLenght} must be positive.");
+            throw new ValidationFailedException($"'{wordLenght}' must be positive.");
         }
     }
 }
