@@ -2,13 +2,12 @@
 using Wordle.Services.Contracts.Words;
 using Wordle.Services.Words;
 
-namespace Wordle.Services.Extensions
+namespace Wordle.Services.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static void AddServicesServices(this IServiceCollection services)
     {
-        public static void AddServicesServices(this IServiceCollection services)
-        {
-            services.AddScoped<IWordsService, WordsService>();
-        }
+        services.AddScoped<IWordsService, WordsService>();
     }
 }

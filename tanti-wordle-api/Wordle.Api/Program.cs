@@ -1,17 +1,15 @@
 using Wordle.Api.Infrastructure;
+using Wordle.Api.Infrastructure.ExceptionHandlers;
 using Wordle.Infrastructure.Extensions;
 
-    var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks()
-    .AddCheck<HealthCheckWithDependencies>("HealthCheckWithDependencies");
-builder.Services.AddWordleServices();
+
+AddHealthChecksServices();
+AddExceptinHandlingServices();
 
 var app = builder.Build();
 
@@ -23,10 +21,23 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+app.UseExceptionHandler();
 
 app.MapControllers();
 app.MapHealthChecks("/healthz");
 
 app.Run();
+
+void AddHealthChecksServices()
+{
+    builder.Services.AddHealthChecks()
+        .AddCheck<HealthCheckWithDependencies>("HealthCheckWithDependencies");
+}
+
+void AddExceptinHandlingServices()
+{
+    builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
+    builder.Services.AddProblemDetails();
+    builder.Services.AddWordleServices();
+}

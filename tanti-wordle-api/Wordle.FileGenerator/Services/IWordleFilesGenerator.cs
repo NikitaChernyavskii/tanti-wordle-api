@@ -1,7 +1,6 @@
-﻿namespace Wordle.FileGenerator.Services
+﻿namespace Wordle.FileGenerator.Services;
+
+public interface IWordleFilesGenerator
 {
-    public interface IWordleFilesGenerator
-    {
-        Task<string> GenerateFileAsync(int wordLenght, bool filterOutSymbols = true);
-    }
+    Task<string> GenerateFileAsync(int wordLenght, bool filterOutSymbols = true);
 }

@@ -1,7 +1,6 @@
-﻿namespace Wordle.Services.Contracts.Words
+﻿namespace Wordle.Services.Contracts.Words;
+
+public interface IWordsService
 {
-    public interface IWordsService
-    {
-        Task<string> GetRandomWord(int wordLenght);
-    }
+    Task<string> GetRandomWord(int wordLenght);
 }
