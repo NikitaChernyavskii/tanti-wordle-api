@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Services", "Wordle.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Services.Tests", "Tests\Wordle.Services.Tests\Wordle.Services.Tests.csproj", "{32F40989-9CB9-447C-B21C-9F71C062C3DC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.FileGenerator", "Wordle.FileGenerator\Wordle.FileGenerator.csproj", "{54299C76-7023-4CF4-B282-28BE0EAE72E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Services.Contracts", "Wordle.Services.Contracts\Wordle.Services.Contracts.csproj", "{4559CEC3-B205-4438-807E-F733EB085DD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Infrastructure", "Wordle.Infrastructure\Wordle.Infrastructure.csproj", "{12B95082-AF0E-411D-81AE-7BD3A611ABA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +35,18 @@ Global
 		{32F40989-9CB9-447C-B21C-9F71C062C3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32F40989-9CB9-447C-B21C-9F71C062C3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32F40989-9CB9-447C-B21C-9F71C062C3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54299C76-7023-4CF4-B282-28BE0EAE72E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54299C76-7023-4CF4-B282-28BE0EAE72E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54299C76-7023-4CF4-B282-28BE0EAE72E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54299C76-7023-4CF4-B282-28BE0EAE72E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4559CEC3-B205-4438-807E-F733EB085DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4559CEC3-B205-4438-807E-F733EB085DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4559CEC3-B205-4438-807E-F733EB085DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4559CEC3-B205-4438-807E-F733EB085DD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12B95082-AF0E-411D-81AE-7BD3A611ABA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12B95082-AF0E-411D-81AE-7BD3A611ABA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12B95082-AF0E-411D-81AE-7BD3A611ABA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12B95082-AF0E-411D-81AE-7BD3A611ABA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

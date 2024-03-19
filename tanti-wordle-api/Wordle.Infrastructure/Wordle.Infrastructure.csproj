@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Wordle.Services.Contracts\Wordle.Services.Contracts.csproj" />
+    <ProjectReference Include="..\Wordle.Services\Wordle.Services.csproj" />
   </ItemGroup>
 
 </Project>

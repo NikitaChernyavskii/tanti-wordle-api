@@ -1,6 +1,7 @@
 using Wordle.Api.Infrastructure;
+using Wordle.Infrastructure.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+    var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks()
     .AddCheck<HealthCheckWithDependencies>("HealthCheckWithDependencies");
+builder.Services.AddWordleServices();
 
 var app = builder.Build();
 
