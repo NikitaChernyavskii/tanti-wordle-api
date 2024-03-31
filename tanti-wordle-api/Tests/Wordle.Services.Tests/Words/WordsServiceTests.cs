@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using NSubstitute;
+using Wordle.Services.Contracts.Models;
 using Wordle.Services.Words;
 using Wordle.Services.Words.Validators;
 
@@ -34,7 +35,7 @@ public class WordsServiceTests
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
 
         // Act && Assert
-        var exception = Assert.ThrowsAsync<ArgumentException>(() => _wordsService.GetRandomWord(wordLenght));
+        var exception = Assert.ThrowsAsync<ArgumentException>(() => _wordsService.GetRandomWordAsync(wordLenght));
         Assert.That(exception.Message, Is.EqualTo($"File with {wordLenght} lenght does not exist."));
     }
 
@@ -46,7 +47,7 @@ public class WordsServiceTests
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
 
         // Act && Assert
-        var exception = Assert.ThrowsAsync<ArgumentException>(() => _wordsService.GetRandomWord(wordLenght));
+        var exception = Assert.ThrowsAsync<ArgumentException>(() => _wordsService.GetRandomWordAsync(wordLenght));
         Assert.That(exception.Message, Is.EqualTo($"File with {wordLenght} lenght does not have words."));
     }
 
@@ -58,9 +59,41 @@ public class WordsServiceTests
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
 
         // Act
-        var result = await _wordsService.GetRandomWord(wordLenght);
+        var result = await _wordsService.GetRandomWordAsync(wordLenght);
 
         // Assert
         Assert.That(result, Is.EqualTo("Test"));
+    }
+
+    [Test]
+    public void GetWordValidation_WhenWordsAreEqual_ReturnAllMatchValidation()
+    {
+        // Arrange
+        var wordToValdiate = _autoFixture.Create<string>();
+        var targetWord = wordToValdiate;
+
+        // Act
+        var result = _wordsService.GetWordValidation(wordToValdiate, targetWord);
+
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.CharacterValidations.All(x => x.Status == CharacterValidaionStatus.Matches), Is.True);
+    }
+
+    [Test]
+    public void GetWordValidation_WhenWordsAreDifferent_ReturnActualValidation()
+    {
+        // Arrange
+        var wordToValdiate = "АААс";
+        var targetWord = "cАБССВа";
+
+        // Act
+        var result = _wordsService.GetWordValidation(wordToValdiate, targetWord);
+
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.CharacterValidations.Where(x => x.Status == CharacterValidaionStatus.Matches).Count(), Is.EqualTo(2));
+        Assert.That(result.CharacterValidations.Where(x => x.Status == CharacterValidaionStatus.Exists).Count(), Is.EqualTo(1));
+        Assert.That(result.CharacterValidations.Where(x => x.Status == CharacterValidaionStatus.NotExists).Count(), Is.EqualTo(1));
     }
 }

@@ -1,12 +1,25 @@
+using System.Text.Json.Serialization;
 using Wordle.Api.Infrastructure;
 using Wordle.Api.Infrastructure.ExceptionHandlers;
 using Wordle.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        opt.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<RouteOptions>(opt =>
+{
+    opt.LowercaseUrls = true;
+});
+
+builder.Services.AddWordleServices();
 
 AddHealthChecksServices();
 AddExceptinHandlingServices();
@@ -41,5 +54,4 @@ void AddExceptinHandlingServices()
     builder.Services.AddExceptionHandler<ValidationFailedExceptionHandler>();
     builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
     builder.Services.AddProblemDetails();
-    builder.Services.AddWordleServices();
 }
