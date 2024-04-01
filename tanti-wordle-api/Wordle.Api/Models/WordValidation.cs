@@ -5,5 +5,5 @@ namespace Wordle.Api.Models;
 [ExcludeFromCodeCoverage]
 public class WordValidation
 {
-    public List<CharacterValidation> CharacterValidations { get; set; }
+    public List<CharacterValidation> CharacterValidations { get; set; } = [];
 }

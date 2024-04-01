@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
+using Wordle.Api.Models;
 using Wordle.Services.Contracts.Words;
 
 namespace Wordle.Api.Words;
@@ -11,9 +13,13 @@ public class WordsController : ControllerBase
 {
     private readonly IWordsService _wordsService;
 
-    public WordsController(IWordsService wordsService)
+    private readonly IMapper _mapper;
+
+    public WordsController(IWordsService wordsService,
+        IMapper mapper)
     {
         _wordsService = wordsService;
+        _mapper = mapper;
     }
 
     [HttpGet("random")]
@@ -27,8 +33,8 @@ public class WordsController : ControllerBase
     [HttpGet("validation")]
     public IActionResult GetWordValidation(string wordToValidate, string targetWord)
     {
-        // TODO: add WordValidation to Models and add automapper logic
         var validation = _wordsService.GetWordValidation(wordToValidate, targetWord);
+        var response = _mapper.Map<WordValidation>(validation);
 
         return Ok(validation);
     }

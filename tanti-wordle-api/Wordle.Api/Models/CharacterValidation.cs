@@ -2,7 +2,6 @@
 
 namespace Wordle.Api.Models;
 
-
 [ExcludeFromCodeCoverage]
 public class CharacterValidation
 {

@@ -145,6 +145,7 @@ public class WordsService : IWordsService
             {
                 characterValidations[currentMatch.Index].Status = CharacterValidaionStatus.Matches;
             }
+            // TODO: add checking for targetWordCurrentCharacterList.Count - matches.Count > 0 to avoid redundant calculations
             var exists = wordToValidateCurrentCharacterList.Where(x => targetWordCurrentCharacterList.Any(t => t.Index != x.Index) && !matches.Any(m => m.Index == x.Index))
                 .Take(targetWordCurrentCharacterList.Count - matches.Count).ToList();
             foreach (var currentExist in exists)
