@@ -36,6 +36,6 @@ public class WordsController : ControllerBase
         var validation = _wordsService.GetWordValidation(wordToValidate, targetWord);
         var response = _mapper.Map<WordValidation>(validation);
 
-        return Ok(validation);
+        return Ok(response);
     }
 }
