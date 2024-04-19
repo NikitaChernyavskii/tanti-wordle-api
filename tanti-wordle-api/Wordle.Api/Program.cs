@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Text.Json.Serialization;
 using Wordle.Api.Infrastructure;
 using Wordle.Api.Infrastructure.ExceptionHandlers;
@@ -6,11 +7,23 @@ using Wordle.Infrastructure.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddControllers()
-    .AddJsonOptions(opt =>
+    .AddCors(options =>
     {
-        opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        opt.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.AddDefaultPolicy(builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+    })
+    .AddControllers(options =>
+    {
+        options.OutputFormatters.RemoveType<StringOutputFormatter>();
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,6 +50,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseExceptionHandler();
+app.UseCors();
 
 app.MapControllers();
 app.MapHealthChecks("/healthz");
