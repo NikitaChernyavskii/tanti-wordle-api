@@ -23,7 +23,7 @@ public class WordsController : ControllerBase
     }
 
     [HttpGet("random")]
-    public async Task<IActionResult> GetRandomWord(int wordLenght)
+    public async Task<IActionResult> GetRandomWord([FromQuery] int wordLenght)
     {
         var word = await _wordsService.GetRandomWordAsync(wordLenght);
 
@@ -31,7 +31,7 @@ public class WordsController : ControllerBase
     }
 
     [HttpGet("validation")]
-    public IActionResult GetWordValidation(string wordToValidate, string targetWord)
+    public IActionResult GetWordValidation([FromQuery] string wordToValidate, [FromQuery] string targetWord)
     {
         var validation = _wordsService.GetWordValidation(wordToValidate, targetWord);
         var response = _mapper.Map<WordValidation>(validation);
