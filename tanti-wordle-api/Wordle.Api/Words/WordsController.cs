@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using Wordle.Api.Models;
 using Wordle.Services.Contracts.Words;
@@ -23,7 +24,7 @@ public class WordsController : ControllerBase
     }
 
     [HttpGet("random")]
-    public async Task<IActionResult> GetRandomWord([FromQuery] int wordLenght)
+    public async Task<ActionResult<string>> GetRandomWord([FromQuery] int wordLenght)
     {
         var word = await _wordsService.GetRandomWordAsync(wordLenght);
 
@@ -31,7 +32,7 @@ public class WordsController : ControllerBase
     }
 
     [HttpGet("validation")]
-    public IActionResult GetWordValidation([FromQuery] string wordToValidate, [FromQuery] string targetWord)
+    public ActionResult<WordValidation> GetWordValidation([FromQuery] [Required] string wordToValidate, [FromQuery] [Required] string targetWord)
     {
         var validation = _wordsService.GetWordValidation(wordToValidate, targetWord);
         var response = _mapper.Map<WordValidation>(validation);

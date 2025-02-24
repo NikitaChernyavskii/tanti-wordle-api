@@ -62,7 +62,7 @@ public class WordsServiceValidatorTests
     public void ValidateGetWordValidation_WhenWordToValidateIsNull_ThenThrowException()
     {
         // Arrange
-        string wordToValidate = null;
+        string? wordToValidate = null;
         string targetWord = _autoFixture.Create<string>();
 
         // Act && Assert
@@ -87,7 +87,7 @@ public class WordsServiceValidatorTests
     {
         // Arrange
         string wordToValidate = _autoFixture.Create<string>();
-        string targetWord = null;
+        string? targetWord = null;
 
         // Act && Assert
         var exception = Assert.Throws<ValidationFailedException>(() => _wordsServiceValidator.ValidateGetWordValidation(wordToValidate, targetWord));
