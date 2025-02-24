@@ -1,7 +1,7 @@
 ﻿using Wordle.Exceptions;
+using Wordle.Services.Contracts.Words.Validators;
 
 namespace Wordle.Services.Words.Validators;
-
 public class WordsServiceValidator : IWordsServiceValidator
 {
     public void ValidateGetWordsFromFile(int wordLenght)

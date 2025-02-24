@@ -13,11 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Services.Tests", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.FileGenerator", "Wordle.FileGenerator\Wordle.FileGenerator.csproj", "{54299C76-7023-4CF4-B282-28BE0EAE72E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Services.Contracts", "Wordle.Services.Contracts\Wordle.Services.Contracts.csproj", "{4559CEC3-B205-4438-807E-F733EB085DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Services.Contracts", "Wordle.Services.Contracts\Wordle.Services.Contracts.csproj", "{4559CEC3-B205-4438-807E-F733EB085DD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Infrastructure", "Wordle.Infrastructure\Wordle.Infrastructure.csproj", "{12B95082-AF0E-411D-81AE-7BD3A611ABA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Infrastructure", "Wordle.Infrastructure\Wordle.Infrastructure.csproj", "{12B95082-AF0E-411D-81AE-7BD3A611ABA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Exceptions", "Wordle.Exceptions\Wordle.Exceptions.csproj", "{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Exceptions", "Wordle.Exceptions\Wordle.Exceptions.csproj", "{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Repository", "Wordle.Repository\Wordle.Repository.csproj", "{38CD4DCB-478A-47B2-B552-C48391D04448}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Repository.Contracts", "Wordle.Repository.Contracts\Wordle.Repository.Contracts.csproj", "{CC5FAF7C-BE14-4D6E-A9BD-4C9F7438BBB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.Repository.Tests", "Wordle.Repository.Tests\Wordle.Repository.Tests.csproj", "{6BED2877-2239-42E0-AF0C-CD05A52D85FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,12 +59,25 @@ Global
 		{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{937AD147-9EBC-4DA3-B7E0-DD7A94F2125D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38CD4DCB-478A-47B2-B552-C48391D04448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38CD4DCB-478A-47B2-B552-C48391D04448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38CD4DCB-478A-47B2-B552-C48391D04448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38CD4DCB-478A-47B2-B552-C48391D04448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC5FAF7C-BE14-4D6E-A9BD-4C9F7438BBB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC5FAF7C-BE14-4D6E-A9BD-4C9F7438BBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC5FAF7C-BE14-4D6E-A9BD-4C9F7438BBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC5FAF7C-BE14-4D6E-A9BD-4C9F7438BBB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BED2877-2239-42E0-AF0C-CD05A52D85FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BED2877-2239-42E0-AF0C-CD05A52D85FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BED2877-2239-42E0-AF0C-CD05A52D85FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BED2877-2239-42E0-AF0C-CD05A52D85FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{32F40989-9CB9-447C-B21C-9F71C062C3DC} = {FE945057-8B80-46E3-849C-57AD76A65436}
+		{6BED2877-2239-42E0-AF0C-CD05A52D85FE} = {FE945057-8B80-46E3-849C-57AD76A65436}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4949BF5-8B08-4CC2-BED2-15F949A73C57}

@@ -6,7 +6,6 @@ using Wordle.Api.Models;
 using Wordle.Services.Contracts.Words;
 
 namespace Wordle.Api.Words;
-
 [ExcludeFromCodeCoverage]
 [ApiController]
 [Route("api/v1/[controller]")]

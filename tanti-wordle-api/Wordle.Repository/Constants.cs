@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Wordle.Services;
+namespace Wordle.Repository;
 
 [ExcludeFromCodeCoverage]
 public static class Constants

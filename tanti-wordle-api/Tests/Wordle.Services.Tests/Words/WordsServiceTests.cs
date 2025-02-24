@@ -2,14 +2,15 @@
 using NSubstitute;
 using Wordle.Services.Contracts.Models;
 using Wordle.Services.Words;
-using Wordle.Services.Words.Validators;
+using Wordle.Services.Contracts.Words.Validators;
+using Wordle.Repository.Contracts.Words;
 
 namespace Wordle.Services.Tests.Words;
-
 [TestFixture]
 public class WordsServiceTests
 {
     private IWordsServiceValidator _wordsServiceValidator;
+    private IWordsRepository _wordsRepository;
     private WordsService _wordsService;
 
     private Fixture _autoFixture;
@@ -18,7 +19,8 @@ public class WordsServiceTests
     public void SetUp()
     {
         _wordsServiceValidator = Substitute.For<IWordsServiceValidator>();
-        _wordsService = new WordsService(_wordsServiceValidator);
+        _wordsRepository = Substitute.For<IWordsRepository>();
+        _wordsService = new WordsService(_wordsServiceValidator, _wordsRepository);
     }
 
     [OneTimeSetUp]
@@ -28,41 +30,20 @@ public class WordsServiceTests
     }
 
     [Test]
-    public void GetRandomWord_WhenFileNotExists_ThenThrowArgumentException()
-    {
-        // Arrange
-        var wordLenght = 123;
-        _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
-
-        // Act && Assert
-        var exception = Assert.ThrowsAsync<ArgumentException>(() => _wordsService.GetRandomWordAsync(wordLenght));
-        Assert.That(exception.Message, Is.EqualTo($"File with {wordLenght} lenght does not exist."));
-    }
-
-    [Test]
-    public void GetRandomWord_WhenFileIsEmpty_ThenThrowArgumentException()
-    {
-        // Arrange
-        var wordLenght = 1000; // existing empty file for testing
-        _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
-
-        // Act && Assert
-        var exception = Assert.ThrowsAsync<ArgumentException>(() => _wordsService.GetRandomWordAsync(wordLenght));
-        Assert.That(exception.Message, Is.EqualTo($"File with {wordLenght} lenght does not have words."));
-    }
-
-    [Test]
     public async Task GetRandomWord_WhenFileIsValid_ThenReturnRandomWord()
     {
         // Arrange
         var wordLenght = 1001; // existing empty file for testing
+        var randomWords = _autoFixture.CreateMany<string>(1).ToList();
+
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
+        _wordsRepository.GetWordsFromFile(wordLenght).Returns(randomWords);
 
         // Act
         var result = await _wordsService.GetRandomWordAsync(wordLenght);
 
         // Assert
-        Assert.That(result, Is.EqualTo("Test"));
+        Assert.That(result, Is.EqualTo(randomWords.First()));
     }
 
     [Test]

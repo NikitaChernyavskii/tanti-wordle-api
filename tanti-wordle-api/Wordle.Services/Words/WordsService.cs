@@ -1,45 +1,30 @@
-﻿using Wordle.Services.Contracts.Models;
+﻿using Wordle.Repository.Contracts.Words;
+using Wordle.Services.Contracts.Models;
 using Wordle.Services.Contracts.Words;
-using Wordle.Services.Words.Validators;
+using Wordle.Services.Contracts.Words.Validators;
 
 namespace Wordle.Services.Words;
-
 public class WordsService : IWordsService
 {
     private readonly IWordsServiceValidator _wordsServiceValidator;
+    private readonly IWordsRepository _wordsRepository;
 
-    public WordsService(IWordsServiceValidator wordsServiceValidator)
+    public WordsService(IWordsServiceValidator wordsServiceValidator,
+        IWordsRepository wordsRepository)
     {
         _wordsServiceValidator = wordsServiceValidator;
+        _wordsRepository = wordsRepository;
     }
 
     public async Task<string> GetRandomWordAsync(int wordLenght)
     {
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
 
-        var words = await GetWordsFromFile(wordLenght);
+        var words = await _wordsRepository.GetWordsFromFile(wordLenght);
         var random = new Random();
         var index = random.Next(0, words.Count);
 
         return words[index];
-    }
-
-    private static async Task<List<string>> GetWordsFromFile(int wordLenght)
-    {
-        var fileName = Constants.LenghtSpecificWordsFileName(wordLenght);
-        var fullFilePath = Constants.FilesDirectoryPath + "\\" + fileName;
-        if (!File.Exists(fullFilePath))
-        {
-            throw new ArgumentException($"File with {wordLenght} lenght does not exist.");
-        }
-
-        var words = await File.ReadAllLinesAsync(fullFilePath);
-        if (words == null || !words.Any())
-        {
-            throw new ArgumentException($"File with {wordLenght} lenght does not have words.");
-        }
-
-        return words.ToList();
     }
 
     public WordValidation GetWordValidation(string wordToValidate, string targetWord)

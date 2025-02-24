@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using Wordle.Services.Contracts.Words;
+using Wordle.Services.Contracts.Words.Validators;
 using Wordle.Services.Words;
 using Wordle.Services.Words.Validators;
 
