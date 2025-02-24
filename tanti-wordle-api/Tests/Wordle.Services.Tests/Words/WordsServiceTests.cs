@@ -4,13 +4,14 @@ using Wordle.Services.Contracts.Models;
 using Wordle.Services.Words;
 using Wordle.Services.Contracts.Words.Validators;
 using Wordle.Repository.Contracts.Words;
+using Wordle.Services.Contracts.Words.CacheDataProviders;
 
 namespace Wordle.Services.Tests.Words;
 [TestFixture]
 public class WordsServiceTests
 {
     private IWordsServiceValidator _wordsServiceValidator;
-    private IWordsRepository _wordsRepository;
+    private IWordsCacheDataProvider _wordsCacheDataProvider;
     private WordsService _wordsService;
 
     private Fixture _autoFixture;
@@ -19,8 +20,8 @@ public class WordsServiceTests
     public void SetUp()
     {
         _wordsServiceValidator = Substitute.For<IWordsServiceValidator>();
-        _wordsRepository = Substitute.For<IWordsRepository>();
-        _wordsService = new WordsService(_wordsServiceValidator, _wordsRepository);
+        _wordsCacheDataProvider = Substitute.For<IWordsCacheDataProvider>();
+        _wordsService = new WordsService(_wordsServiceValidator, _wordsCacheDataProvider);
     }
 
     [OneTimeSetUp]
@@ -37,7 +38,7 @@ public class WordsServiceTests
         var randomWords = _autoFixture.CreateMany<string>(1).ToList();
 
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
-        _wordsRepository.GetWordsFromFile(wordLenght).Returns(randomWords);
+        _wordsCacheDataProvider.GetWordsFromFile(wordLenght).Returns(randomWords);
 
         // Act
         var result = await _wordsService.GetRandomWordAsync(wordLenght);

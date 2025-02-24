@@ -1,26 +1,26 @@
-﻿using Wordle.Repository.Contracts.Words;
-using Wordle.Services.Contracts.Models;
+﻿using Wordle.Services.Contracts.Models;
 using Wordle.Services.Contracts.Words;
+using Wordle.Services.Contracts.Words.CacheDataProviders;
 using Wordle.Services.Contracts.Words.Validators;
 
 namespace Wordle.Services.Words;
 public class WordsService : IWordsService
 {
     private readonly IWordsServiceValidator _wordsServiceValidator;
-    private readonly IWordsRepository _wordsRepository;
+    private readonly IWordsCacheDataProvider _wordsCacheDataProvider;
 
     public WordsService(IWordsServiceValidator wordsServiceValidator,
-        IWordsRepository wordsRepository)
+        IWordsCacheDataProvider wordsRepository)
     {
         _wordsServiceValidator = wordsServiceValidator;
-        _wordsRepository = wordsRepository;
+        _wordsCacheDataProvider = wordsRepository;
     }
 
     public async Task<string> GetRandomWordAsync(int wordLenght)
     {
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
 
-        var words = await _wordsRepository.GetWordsFromFile(wordLenght);
+        var words = await _wordsCacheDataProvider.GetWordsFromFile(wordLenght);
         var random = new Random();
         var index = random.Next(0, words.Count);
 

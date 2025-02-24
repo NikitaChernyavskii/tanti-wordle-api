@@ -33,6 +33,7 @@ builder.Services.Configure<RouteOptions>(opt =>
 });
 
 builder.Services.AddWordleServices();
+builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper(typeof(Program));
 
 AddHealthChecksServices();
