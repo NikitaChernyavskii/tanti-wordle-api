@@ -31,9 +31,9 @@ public class WordsController : ControllerBase
     }
 
     [HttpGet("validation")]
-    public ActionResult<WordValidation> GetWordValidation([FromQuery] [Required] string wordToValidate, [FromQuery] [Required] string targetWord)
+    public async Task<ActionResult<WordValidation>> GetWordValidation([FromQuery] [Required] string wordToValidate, [FromQuery] [Required] string targetWord)
     {
-        var validation = _wordsService.GetWordValidation(wordToValidate, targetWord);
+        var validation = await _wordsService.GetWordValidationAsync(wordToValidate, targetWord);
         var response = _mapper.Map<WordValidation>(validation);
 
         return Ok(response);

@@ -1,4 +1,5 @@
-﻿using Wordle.Services.Contracts.Models;
+﻿using Wordle.Exceptions;
+using Wordle.Services.Contracts.Models;
 using Wordle.Services.Contracts.Words;
 using Wordle.Services.Contracts.Words.CacheDataProviders;
 using Wordle.Services.Contracts.Words.Validators;
@@ -24,12 +25,22 @@ public class WordsService : IWordsService
         var random = new Random();
         var index = random.Next(0, words.Count);
 
-        return words[index];
+        return words.ElementAt(index);
     }
 
-    public WordValidation GetWordValidation(string wordToValidate, string targetWord)
+    public async Task<WordValidation> GetWordValidationAsync(string wordToValidate, string targetWord)
     {
         _wordsServiceValidator.ValidateGetWordValidation(wordToValidate, targetWord);
+        var wordExists = await ValidateWordExistsAsync(wordToValidate);
+        if (!wordExists)
+        {
+
+            return new WordValidation
+            {
+                 WordExists = false,
+                CharacterValidations = null
+            };
+        }
 
         var characterValidations = wordToValidate
             .Select(x => new CharacterValidation { Character = x, Status = CharacterValidaionStatus.NotExists })
@@ -48,22 +59,17 @@ public class WordsService : IWordsService
             var wordToValidateCurrentCharacterList = currentGroup.Value;
             var targetWordCurrentCharacterList = targetWordGroup[currentGroup.Key];
 
-            if (wordToValidateCurrentCharacterList.Count == targetWordCurrentCharacterList.Count)
-            {
-                foreach (var character in wordToValidateCurrentCharacterList)
-                {
-                    characterValidations[character.Index].Status = CharacterValidaionStatus.Matches;
-                }
-
-                continue;
-            }
-
             var matches = wordToValidateCurrentCharacterList.Where(x => targetWordCurrentCharacterList.Any(t => t.Index == x.Index)).ToList();
             foreach (var currentMatch in matches)
             {
                 characterValidations[currentMatch.Index].Status = CharacterValidaionStatus.Matches;
             }
-            // TODO: add checking for targetWordCurrentCharacterList.Count - matches.Count > 0 to avoid redundant calculations
+
+            if (targetWordCurrentCharacterList.Count <= matches.Count)
+            {
+                continue;
+            }
+
             var exists = wordToValidateCurrentCharacterList
                 .Where(x => targetWordCurrentCharacterList.Any(t => t.Index != x.Index) && !matches.Any(m => m.Index == x.Index))
                 .Take(targetWordCurrentCharacterList.Count - matches.Count).ToList();
@@ -75,7 +81,14 @@ public class WordsService : IWordsService
 
         return new WordValidation
         {
+            WordExists = true,
             CharacterValidations = characterValidations
         };
+    }
+
+    private async Task<bool> ValidateWordExistsAsync(string wordToValidate)
+    {
+        var words = await _wordsCacheDataProvider.GetWordsFromFile(wordToValidate.Length);
+        return words.Contains(wordToValidate);
     }
 }

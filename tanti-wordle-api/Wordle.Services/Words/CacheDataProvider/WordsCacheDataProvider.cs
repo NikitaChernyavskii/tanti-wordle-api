@@ -19,11 +19,11 @@ public class WordsCacheDataProvider : IWordsCacheDataProvider
         _cache = cache;
     }
 
-    public async Task<List<string>> GetWordsFromFile(int wordLenght)
+    public async Task<HashSet<string>> GetWordsFromFile(int wordLenght)
     {
         var cacheKey = $"{wordLenght}-lenght-{WordsFromFileCacheKey}";
-        List<string>? words = null;
-        if (_cache.TryGetValue(cacheKey, out List<string>? cachedWords))
+        HashSet<string>? words = null;
+        if (_cache.TryGetValue(cacheKey, out HashSet<string>? cachedWords))
         {
             words = cachedWords;
         }

@@ -66,7 +66,9 @@ public class WordsServiceValidatorTests
         string targetWord = _autoFixture.Create<string>();
 
         // Act && Assert
+#pragma warning disable CS8604 // Possible null reference argument.
         var exception = Assert.Throws<ValidationFailedException>(() => _wordsServiceValidator.ValidateGetWordValidation(wordToValidate, targetWord));
+#pragma warning restore CS8604 // Possible null reference argument.
         Assert.That(exception.Message, Is.EqualTo($"'{nameof(wordToValidate)}' must not be empty."));
     }
 
@@ -90,7 +92,9 @@ public class WordsServiceValidatorTests
         string? targetWord = null;
 
         // Act && Assert
+#pragma warning disable CS8604 // Possible null reference argument.
         var exception = Assert.Throws<ValidationFailedException>(() => _wordsServiceValidator.ValidateGetWordValidation(wordToValidate, targetWord));
+#pragma warning restore CS8604 // Possible null reference argument.
         Assert.That(exception.Message, Is.EqualTo($"'{nameof(targetWord)}' must not be empty."));
     }
 

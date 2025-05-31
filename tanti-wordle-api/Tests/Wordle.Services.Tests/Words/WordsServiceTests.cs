@@ -5,6 +5,8 @@ using Wordle.Services.Words;
 using Wordle.Services.Contracts.Words.Validators;
 using Wordle.Repository.Contracts.Words;
 using Wordle.Services.Contracts.Words.CacheDataProviders;
+using System.Collections.Generic;
+using Wordle.Exceptions;
 
 namespace Wordle.Services.Tests.Words;
 [TestFixture]
@@ -35,7 +37,7 @@ public class WordsServiceTests
     {
         // Arrange
         var wordLenght = 1001; // existing empty file for testing
-        var randomWords = _autoFixture.CreateMany<string>(1).ToList();
+        var randomWords = new HashSet<string>(_autoFixture.CreateMany<string>(1));
 
         _wordsServiceValidator.ValidateGetWordsFromFile(wordLenght);
         _wordsCacheDataProvider.GetWordsFromFile(wordLenght).Returns(randomWords);
@@ -48,34 +50,60 @@ public class WordsServiceTests
     }
 
     [Test]
-    public void GetWordValidation_WhenWordsAreEqual_ReturnAllMatchValidation()
+    public async Task GetWordValidation_WhenWordNotExists_ThenThrowValidationFailedException()
     {
         // Arrange
-        var wordToValdiate = _autoFixture.Create<string>();
-        var targetWord = wordToValdiate;
+        var wordToValidate = _autoFixture.Create<string>();
+        var targetWord = wordToValidate;
+        var hashSet = new HashSet<string>(_autoFixture.CreateMany<string>());
+
+        _wordsCacheDataProvider.GetWordsFromFile(wordToValidate.Length).Returns(hashSet);
+
+        var result = await _wordsService.GetWordValidationAsync(wordToValidate, targetWord);
+
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.CharacterValidations, Is.Null);
+        Assert.That(result.WordExists, Is.False);
+    }
+
+    [Test]
+    public async Task GetWordValidation_WhenWordsAreEqual_ReturnAllMatchValidation()
+    {
+        // Arrange
+        var wordToValidate = _autoFixture.Create<string>();
+        var targetWord = wordToValidate;
+        var hashSet = new HashSet<string>(new List<string> { wordToValidate });
+
+        _wordsCacheDataProvider.GetWordsFromFile(wordToValidate.Length).Returns(hashSet);
 
         // Act
-        var result = _wordsService.GetWordValidation(wordToValdiate, targetWord);
+        var result = await _wordsService.GetWordValidationAsync(wordToValidate, targetWord);
 
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.CharacterValidations.All(x => x.Status == CharacterValidaionStatus.Matches), Is.True);
+        Assert.That(result.WordExists, Is.True);
     }
 
     [Test]
-    public void GetWordValidation_WhenWordsAreDifferent_ReturnActualValidation()
+    public async Task GetWordValidation_WhenWordsAreDifferent_ReturnActualValidation()
     {
         // Arrange
-        var wordToValdiate = "АААс";
+        var wordToValidate = "АААс";
         var targetWord = "cАБССВа";
+        var hashSet = new HashSet<string>(new List<string> { wordToValidate, targetWord });
+
+        _wordsCacheDataProvider.GetWordsFromFile(wordToValidate.Length).Returns(hashSet);
 
         // Act
-        var result = _wordsService.GetWordValidation(wordToValdiate, targetWord);
+        var result = await _wordsService.GetWordValidationAsync(wordToValidate, targetWord);
 
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.CharacterValidations.Where(x => x.Status == CharacterValidaionStatus.Matches).Count(), Is.EqualTo(2));
         Assert.That(result.CharacterValidations.Where(x => x.Status == CharacterValidaionStatus.Exists).Count(), Is.EqualTo(1));
         Assert.That(result.CharacterValidations.Where(x => x.Status == CharacterValidaionStatus.NotExists).Count(), Is.EqualTo(1));
+        Assert.That(result.WordExists, Is.True);
     }
 }

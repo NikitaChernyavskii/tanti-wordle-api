@@ -3,7 +3,7 @@
 namespace Wordle.Repository.Words;
 public class WordsRepository : IWordsRepository
 {
-    public async Task<List<string>> GetWordsFromFile(int wordLenght)
+    public async Task<HashSet<string>> GetWordsFromFile(int wordLenght)
     {
         var fileName = Constants.LenghtSpecificWordsFileName(wordLenght);
         var fullFilePath = Constants.FilesDirectoryPath + "\\" + fileName;
@@ -18,6 +18,6 @@ public class WordsRepository : IWordsRepository
             throw new ArgumentException($"File with {wordLenght} lenght does not have words.");
         }
 
-        return words.ToList();
+        return new HashSet<string>(words);
     }
 }
