@@ -3,10 +3,7 @@ using NSubstitute;
 using Wordle.Services.Contracts.Models;
 using Wordle.Services.Words;
 using Wordle.Services.Contracts.Words.Validators;
-using Wordle.Repository.Contracts.Words;
 using Wordle.Services.Contracts.Words.CacheDataProviders;
-using System.Collections.Generic;
-using Wordle.Exceptions;
 
 namespace Wordle.Services.Tests.Words;
 [TestFixture]

@@ -89,6 +89,6 @@ public class WordsService : IWordsService
     private async Task<bool> ValidateWordExistsAsync(string wordToValidate)
     {
         var words = await _wordsCacheDataProvider.GetWordsFromFile(wordToValidate.Length);
-        return words.Contains(wordToValidate);
+        return words.Contains(wordToValidate.ToLower());
     }
 }
